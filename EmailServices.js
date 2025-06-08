@@ -1,4 +1,4 @@
-import { providerA, providerB } from "./providers.js";
+import { providerA, providerB } from "./Providers/MockProviders.js";
 
 export class EmailService {
   constructor(providers) {
