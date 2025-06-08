@@ -1,0 +1,16 @@
+{
+  "name": "email-service",
+  "version": "1.0.0",
+  "description": "Reliable Node.js microservice for email sending with retry, fallback, rate-limiting, and idempotency.",
+  "main": "utils/EmailServices.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "keywords": [],
+  "author": "Kaveri M Metri",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

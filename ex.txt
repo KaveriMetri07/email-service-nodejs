@@ -1,0 +1,44 @@
+
+//EmailService.spec.js example 
+import { EmailService } from "./EmailServices.js";
+
+describe("EmailService", () => {
+  let service;
+
+  beforeEach(() => {
+    service = new EmailService();
+  });
+
+  test("sends a single email successfully", async () => {
+    const email = {
+      id: "test-1",
+      to: "test@example.com",
+      subject: "Hello!",
+      body: "Welcome to PearlThoughts!",
+    };
+
+    await service.sendEmail(email);
+
+    const status = service.getStatus();
+    expect(status.length).toBe(1);
+    expect(status[0].id).toBe("test-1");
+    expect(status[0].status).toBe("success");
+  });
+
+  test("does not send duplicate emails", async () => {
+    const email = {
+      id: "dupe-1",
+      to: "hello@example.com",
+      subject: "Duplicate Test",
+      body: "Do not resend me!",
+    };
+
+    await service.sendEmail(email);
+    await service.sendEmail(email); // duplicate
+
+    const status = service.getStatus();
+    expect(status.length).toBe(1); // should only have one entry
+  });
+});
+
+EmailService.js;
