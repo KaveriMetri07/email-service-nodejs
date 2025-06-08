@@ -3,13 +3,14 @@ import express from "express";
 import dotenv from "dotenv";
 import { EmailService } from "./EmailServices.js";
 import { SendGridProvider } from "./Providers/sendgridProvider.js";
+import { providerA, providerB } from "./Providers/MockProviders.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-const emailService = new EmailService([SendGridProvider]);
+const emailService = new EmailService([providerA, providerB]);
 
 app.post("/send-email", async (req, res) => {
   const { id, email, subject, body } = req.body;

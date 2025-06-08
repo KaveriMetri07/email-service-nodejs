@@ -2,13 +2,13 @@
 EMAIL SENDING SERVICE - NODE.JS BACKEND PROJECT
 ==================================================
 
-1. PROJECT TITLE
+## 1. PROJECT TITLE
 
 ---
 
 Email Sending Service - Reliable Node.js Microservice
 
-2. DESCRIPTION
+## 2. DESCRIPTION
 
 ---
 
@@ -21,9 +21,9 @@ It ensures reliable and efficient email delivery by implementing industry best p
 - Rate limiting to prevent abuse (maximum 5 emails per minute)
 - In-memory status tracking of all email send attempts
 
-The goal is to create a scalable, fault-tolerant microservice suitable for real-world backend communication needs.
+The goal is to simulate a **resilient and fault-tolerant email microservice**, suitable for real-world cloud deployment.
 
-3. FEATURES
+## 3. FEATURES
 
 ---
 
@@ -35,7 +35,7 @@ The goal is to create a scalable, fault-tolerant microservice suitable for real-
 - Comprehensive unit tests using Jest
 - Clean, modular ES6+ codebase for maintainability and scalability
 
-4. TECH STACK
+## 4. TECH STACK
 
 ---
 
@@ -45,20 +45,25 @@ The goal is to create a scalable, fault-tolerant microservice suitable for real-
 - Console-based logging (can be extended to production logging tools)
 - No external database; in-memory data structures only for demo purposes
 
-5. FOLDER STRUCTURE
+## 5. FOLDER STRUCTURE
 
 ---
 
 email-service/
 │
-├── EmailService.js # Core email service logic implementing retry, fallback, idempotency, and rate limiting
-├── _test_/ # Contains all test files
-│ └── EmailService.spec.js # Unit tests for EmailService class
-├── package.json # Project dependencies and npm scripts
-├── .gitignore # Git ignore rules
-└── README.txt # This documentation file
+├── App.js # Main Express server
+├── EmailServices.js # Core logic for retry, fallback, rate limiting, etc.
+├── Providers/
+│ ├── MockProviders.js # Provider A and B (mock)
+│ └── sendgridProvider.js # Optional real provider (SendGrid)
+├── index.js # Standalone test runner for local testing
+├── test/
+│ └── EmailService.spec.js # Jest tests
+├── package.json
+├── .gitignore
+└── README.md
 
-6. GETTING STARTED
+## 6. GETTING STARTED
 
 ---
 
@@ -78,7 +83,16 @@ Note: To run tests successfully with ES Modules, use Node.js v18+ and run Jest w
 
 node --experimental-vm-modules node_modules/jest/bin/jest.js
 
-7. USAGE
+## Run local mock test
+
+node index.js
+
+## Run the API server locally
+
+npm start
+API will start on http://localhost:3000
+
+## 7. USAGE
 
 ---
 
@@ -86,25 +100,43 @@ The EmailService class is designed to be imported and used in other Node.js appl
 
 Example:
 
-import EmailService from './EmailService.js';
+## POST /send-email
 
-const providers = [
-async function MockProvider(email) {
-// Simulated email provider returning success
-return { status: 'success', provider: 'MockProvider' };
+{
+"id": "email-001",
+"email": "kaveemetri@gmail.com",
+"subject": "Test Email",
+"body": "This is a test message."
 }
-];
 
-const emailService = new EmailService(providers);
+## Sample Response
 
-emailService.sendEmail({
-id: 'unique-id-123',
-email: 'user@example.com',
-subject: 'Hello!',
-body: 'This is a test email.'
-}).then(console.log);
+{
+"id": "email-001",
+"status": "success",
+"provider": "ProviderA"
+}
 
-8. RUNNING TESTS
+## Duplicate call:
+
+{
+"id": "email-001",
+"status": "duplicate"
+}
+
+## 8. MOCK PROVIDERS
+
+The system uses two fake/mock email providers for testing:
+
+Provider A: 70% success rate
+
+Provider B: 80% success rate
+
+They are simulated with delays and random failures to test retry and fallback logic.
+
+Location: Providers/MockProviders.js
+
+## 9. RUNNING TESTS
 
 ---
 
@@ -116,22 +148,31 @@ The project includes a suite of unit tests using Jest to verify:
 - Successful email delivery tracking
 - Fallback provider handling
 
-Run tests with:
+## Run tests with:
 
-npm test
+    npm run test
 
-9. ENVIRONMENT VARIABLES
+## OR (if you're using ES6 modules):
+
+    node --experimental-vm-modules node_modules/jest/bin/jest.js
+
+## 10. ENVIRONMENT VARIABLES
 
 ---
 
-Currently, all configurations are in-memory and hardcoded for demonstration.
-
-You can extend the service in the future to support environment variables such as:
+This project uses .env for SendGrid (optional). Currently, mock providers do not require any secrets.
 
 PROVIDER_API_KEY=your-api-key
 MAX_EMAILS_PER_MINUTE=5
+SENDGRID_API_KEY=your_key_here
 
-10. CONTRIBUTING GUIDELINES
+## 11.DEPLOYMENT (RENDER)
+
+This service is deployed on Render at:
+POST https://your_email_services-example.onrender.com/send-email
+Feel free to use Thunder Client, Postman, or curl to test
+
+## 12. CONTRIBUTING GUIDELINES
 
 ---
 
@@ -147,13 +188,13 @@ Contributions are welcome! Please follow this workflow:
 
 Follow ES6 coding conventions and keep code modular and clean.
 
-11. LICENSE
+## 13. LICENSE
 
 ---
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-12. CONTACT / AUTHOR INFO
+## 14. CONTACT / AUTHOR INFO
 
 ---
 
@@ -164,7 +205,9 @@ LinkedIn: linkedin.com/in/Kaveri07
 GitHub: github.com/KaveriMetri07
 
 ==================================================
-Summary:  
+
+## Summary:
+
 A Node.js backend email sending microservice with retry, fallback, idempotency, and rate limiting — built with ES6 modules and unit tested using Jest.
 
 ==================================================
