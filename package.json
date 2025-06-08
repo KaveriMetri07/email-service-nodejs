@@ -4,6 +4,7 @@
   "description": "Reliable Node.js microservice for email sending with retry, fallback, rate-limiting, and idempotency.",
   "main": "utils/EmailServices.js",
   "scripts": {
+    "start": "node App.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [],
@@ -15,6 +16,7 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.5",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
   }
 }
