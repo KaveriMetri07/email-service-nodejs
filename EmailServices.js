@@ -53,7 +53,20 @@ export class EmailService {
     for (let i = 0; i < this.providers.length; i++) {
       const provider = this.providers[i];
       try {
-        const result = await this.retryWithBackoff(() => provider(emailData));
+        const result = await this.retryWithBackoff(() => {
+          // If provider is a function, call directly
+          if (typeof provider === "function") {
+            return provider(emailData);
+          }
+          // If it's an object with .send(), use that
+          if (typeof provider.send === "function") {
+            return provider.send(emailData);
+          }
+          throw new Error(
+            "Invalid provider: must be function or have .send() method"
+          );
+        });
+
         this.markSent(id);
         const successStatus = {
           id,

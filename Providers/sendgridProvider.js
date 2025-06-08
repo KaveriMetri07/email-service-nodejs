@@ -15,6 +15,6 @@ export const SendGridProvider = {
     };
 
     const response = await sgMail.send(msg);
-    return { success: true, response };
+    return { provider: "SendGrid", success: true, response };
   },
 };
